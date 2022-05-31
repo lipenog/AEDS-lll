@@ -16,17 +16,14 @@ int *adj(int *matriz, int tamanho, int vertice)
 {
     int *tmp = new int[tamanho];
     int *aux = tmp;
-    for(int *ptr = &matriz[tamanho*vertice]; ptr < &matriz[tamanho*vertice] + tamanho; ptr++)
-    {
-        if(*ptr != 0)
-        {
+    for(int *ptr = &matriz[tamanho*vertice]; ptr < &matriz[tamanho*vertice] + tamanho; ptr++){
+        if(*ptr != 0){
             *tmp = ptr - &matriz[tamanho*vertice];
             tmp++;
         }
     }
     return aux;
 }
-
 
 int main(void)
 {
@@ -51,6 +48,7 @@ int main(void)
     int *matriz = new int[qtd_linhas*qtd_linhas];
     int *matriz_dados = new int[qtd_linhas*3];
     int *ptr = matriz_dados;
+    vertice *conjunto = new vertice[qtd_linhas];
 
     // PERCORRE O ARQ DNV E GUARDA OS VALORES EM UMA MATRIZ
     if ( myfile2.is_open() ) {
@@ -105,17 +103,22 @@ int main(void)
         //cout << *ptr << " ";
     } 
 
-    for(int i = 0; i < qtd_linhas; i++)
-    {
+
+
+
+    for(int i = 0; i < qtd_linhas; i++){
         int *aux = adj(matriz, qtd_linhas, i);
-        for(int i = 0; i < qtd_linhas; i++)
-        {
-            cout << *aux << " ";
+        for(int i = 0; i < qtd_linhas; i++){
+            //cout << *aux << " ";
             aux++;
         }
-        cout << endl;          
+        //cout << endl;          
     }
 
+    for(vertice *i = &conjunto[0]; i < &conjunto[0] + qtd_linhas; i++){
+        cout << i->valor << " ";
+    }
+    cout << endl;
     
 
     return 0;
