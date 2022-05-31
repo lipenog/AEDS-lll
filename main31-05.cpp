@@ -5,6 +5,8 @@
 
 using namespace std;
 
+int tempo;
+
 typedef struct{
     int valor;
     int d;
@@ -23,6 +25,29 @@ int *adj(int *matriz, int tamanho, int vertice)
         }
     }
     return aux;
+}
+
+void dfs_visit(vertice *vertices)
+{
+    vertice *tmp = vertices;
+    tmp->cor = "CINZA";
+    tempo++;
+    tmp->d = tempo;
+    
+}
+
+void dfs(vertice *vertices, int tamanho)
+{
+    for(vertice *tmp = vertices; tmp < vertices + tamanho; tmp++){
+        tmp->cor = "BRANCO";
+    }
+    tempo = 0;
+    for(vertice *tmp = vertices; tmp < vertices + tamanho; tmp++){
+        if(tmp->cor == "BRANCO"){
+
+        }
+    }
+        
 }
 
 int main(void)
@@ -49,6 +74,7 @@ int main(void)
     int *matriz_dados = new int[qtd_linhas*3];
     int *ptr = matriz_dados;
     vertice *conjunto = new vertice[qtd_linhas];
+    vertice *vertices = conjunto;
 
     // PERCORRE O ARQ DNV E GUARDA OS VALORES EM UMA MATRIZ
     if ( myfile2.is_open() ) {
@@ -79,6 +105,8 @@ int main(void)
     // RODA PELA MATRIZ CALCULANDO OS VALORES DA ARESTA
     int x1, x2, y1, y2;
     for (int i = 0; i < qtd_linhas; i++) {
+        conjunto->valor = matriz_dados[3*i];
+        conjunto++;
         // COMO TODAS OS V SÃO CONECTADOS BASTA FAZER X1 E Y1 1 VEZ POR REP
         x1 = matriz_dados[3*i + 1];
         y1 = matriz_dados[3*i + 2];
@@ -115,8 +143,8 @@ int main(void)
         //cout << endl;          
     }
 
-    for(vertice *i = &conjunto[0]; i < &conjunto[0] + qtd_linhas; i++){
-        cout << i->valor << " ";
+    for(; vertices < conjunto; vertices++){
+        cout << vertices->valor << " ";
     }
     cout << endl;
     
