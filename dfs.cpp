@@ -27,11 +27,7 @@ void dfs_visit(int u, int *cor, int *d, int *f, int tamanho, int *matriz)
     tempo++;
     d[u] = tempo;
     int i = 0;
-    int *aux = adj(matriz, tamanho, u-1);
-    //cout << "ADJ DE " << u << endl; 
-    for(int *tmp = aux; i < tamanho; tmp++, i++) {
-    //    cout << *tmp << " ";
-    }
+    int *aux = adj(matriz, tamanho, u);
     cout << endl;
     for(int *tmp = aux; i < tamanho; tmp++, i++) {
         if(cor[tmp - aux] == 0){
@@ -143,23 +139,11 @@ int main(void)
         }
         //cout << *ptr << " ";
     } 
-    for (int i = 0; i < qtd_linhas; i++) {
-        cout << "ADJ de " << i << endl;
-        for (int *a  = adj(matriz, qtd_linhas, i), j = 0; j < qtd_linhas; j++, a++) {
-            cout << " " << *a << " ";
-        }
-        cout << endl;
-    }
     dfs(nome, cor, d, f, qtd_linhas, matriz);
     for (int *i = nome, *j = d, *k = f, *l = cor; i < nome + qtd_linhas; i++, j++, k++, l++) {
         cout << "V: " << *i << " d: " << *j << " f: " << *k << " cor: " << *l << endl;
     }
     cout << endl;
-
-
-
-
-
 
     return 0;
 }
