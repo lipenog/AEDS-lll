@@ -47,6 +47,7 @@ int main(void)
     }
 
     // PRINTA A MATRIZ DO ARQ
+    cout << endl << endl;
     for (ptr = matriz_dados; ptr < matriz_dados+qtd_linhas*3; ptr++, i++){
         if (i == 3) {
             cout << endl;
@@ -54,12 +55,11 @@ int main(void)
         }
         cout << *ptr << " ";
     } 
+    cout << endl << endl;
 
     // RODA PELA MATRIZ CALCULANDO OS VALORES DA ARESTA
     int x1, x2, y1, y2;
     for (int i = 0; i < qtd_linhas; i++) {
-        *tmp = matriz_dados[3*i];
-        tmp++;
         // COMO TODAS OS V SÃO CONECTADOS BASTA FAZER X1 E Y1 1 VEZ POR REP
         x1 = matriz_dados[3*i + 1];
         y1 = matriz_dados[3*i + 2];
@@ -76,11 +76,7 @@ int main(void)
     } 
 
     // PRINTA A MATRIZ DE ARESTA
-    for (ptr = matriz; ptr < matriz+(qtd_linhas*qtd_linhas); ptr++, i++){
-        if (i == qtd_linhas - 1) {
-            cout << endl;
-            i = 0;
-        }
+    for (ptr = matriz; ptr < matriz+(qtd_linhas*qtd_linhas); ptr++){
         cout << *ptr << " ";
     } 
 
