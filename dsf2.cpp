@@ -28,7 +28,6 @@ void dfs_visit(int u, int *cor, int *d, int *f, int tamanho, int *matriz)
     d[u] = tempo;
     int i = 0;
     int *aux = adj(matriz, tamanho, u);
-    cout << endl;
     for(int *tmp = aux; i < tamanho; tmp++, i++) {
         if(cor[tmp - aux] == 0){
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
@@ -50,7 +49,6 @@ void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
-        
 }
 
 int main(void)
