@@ -13,7 +13,7 @@ int *adj(int *matriz, int tamanho, int vertice)
     int *aux = tmp;
     for(int *ptr = &matriz[tamanho*vertice]; ptr < &matriz[tamanho*vertice] + tamanho; ptr++){
         if(*ptr != 0){
-            *tmp = ptr - &matriz[tamanho*vertice];
+            *tmp = ptr - &matriz[tamanho*vertice] + 1;
             tmp++;
         }
     }
@@ -23,20 +23,20 @@ int *adj(int *matriz, int tamanho, int vertice)
 void dfs_visit(int u, int *cor, int *d, int *f, int tamanho, int *matriz)
 {
     int v;
-    cor[u] = 1;
+    cor[u-1] = 1;
     tempo++;
-    d[u] = tempo;
+    d[u-1] = tempo;
     int i = 0;
-    int *aux = adj(matriz, tamanho, u);
-    cout << endl;
-    for(int *tmp = aux; i < tamanho; tmp++, i++) {
+    int *aux = adj(matriz, tamanho, u-1);
+    for(int *tmp = aux; i < tamanho - 1; tmp++, i++) {
         if(cor[tmp - aux] == 0){
+            cout << "dfs visit - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
-    cor[u] = 2;
+    cor[u-1] = 2;
     tempo++;
-    f[u] = tempo;
+    f[u-1] = tempo;
 }
 
 void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
@@ -47,10 +47,10 @@ void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
     tempo = 0;
     for(int *tmp = vertices; tmp < vertices + tamanho; tmp++){
         if(cor[tmp - vertices] == 0){
+            cout << "dfs - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
-        
 }
 
 int main(void)
@@ -137,8 +137,15 @@ int main(void)
         //    cout << endl;
             i = 0;
         }
-        //cout << *ptr << " ";
+        cout << *ptr << " ";
     } 
+    for (int i = 0; i < qtd_linhas; i++) {
+        cout << "ADJ de " << i+1 << endl;
+        for (int *a = adj(matriz, qtd_linhas, i), j = 0; j < qtd_linhas; j++, a++) {
+            cout << *a << " ";
+        }
+        cout << endl;
+    }
     dfs(nome, cor, d, f, qtd_linhas, matriz);
     for (int *i = nome, *j = d, *k = f, *l = cor; i < nome + qtd_linhas; i++, j++, k++, l++) {
         cout << "V: " << *i << " d: " << *j << " f: " << *k << " cor: " << *l << endl;
