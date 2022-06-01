@@ -23,19 +23,20 @@ int *adj(int *matriz, int tamanho, int vertice)
 void dfs_visit(int u, int *cor, int *d, int *f, int tamanho, int *matriz)
 {
     int v;
-    cor[u] = 1;
+    cor[u-1] = 1;
     tempo++;
-    d[u] = tempo;
+    d[u-1] = tempo;
     int i = 0;
-    int *aux = adj(matriz, tamanho, u);
-    for(int *tmp = aux; i < tamanho; tmp++, i++) {
+    int *aux = adj(matriz, tamanho, u-1);
+    for(int *tmp = aux; i < tamanho - 1; tmp++, i++) {
         if(cor[tmp - aux] == 0){
+            cout << "dfs visit - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
-    cor[u] = 2;
+    cor[u-1] = 2;
     tempo++;
-    f[u] = tempo;
+    f[u-1] = tempo;
 }
 
 void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
@@ -46,6 +47,7 @@ void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
     tempo = 0;
     for(int *tmp = vertices; tmp < vertices + tamanho; tmp++){
         if(cor[tmp - vertices] == 0){
+            cout << "dfs - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
