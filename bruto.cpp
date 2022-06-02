@@ -30,7 +30,7 @@ void dfs_visit(int u, int *cor, int *d, int *f, int tamanho, int *matriz)
     int *aux = adj(matriz, tamanho, u-1);
     for(int *tmp = aux; i < tamanho - 1; tmp++, i++) {
         if(cor[tmp - aux] == 0){
-            cout << "dfs visit - vertice = " << *tmp << endl;
+            //cout << "dfs visit - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
@@ -47,10 +47,47 @@ void dfs(int *vertices, int *cor, int *d, int *f, int tamanho, int *matriz)
     tempo = 0;
     for(int *tmp = vertices; tmp < vertices + tamanho; tmp++){
         if(cor[tmp - vertices] == 0){
-            cout << "dfs - vertice = " << *tmp << endl;
+            //cout << "dfs - vertice = " << *tmp << endl;
             dfs_visit(*tmp, cor, d, f, tamanho, matriz);
         }
     }
+}
+
+void bfs(int *g, int s, int *cor, int *d, int *pi, int tamanho, int *matriz)
+{
+    for(int *tmp = g; tmp < g + tamanho; tmp++){
+        cor[tmp - g] = 0;
+        d[tmp - g] = -1;
+        pi[tmp - g] = NULL;
+    }
+    cor[s-1] = 1;
+    d[s-1] = 0;
+    pi[s-1] = NULL;
+    int *fila = new int[tamanho];
+    int *f = fila;
+    int tam_fila = 0;
+    *f = s;
+    f++;
+    tam_fila++;
+    while (tam_fila != 0)
+    {
+        f--;
+        int u = *f;
+        tam_fila--;
+        int *aux = adj(matriz, tamanho, u-1);
+        for(int *tmp = aux, i = 0; i < tamanho - 1; tmp++, i++) {
+            if(cor[*tmp - 1] == 0){
+                cor[*tmp - 1] = 1;
+                d[*tmp - 1] = d[u-1] + 1;
+                pi[*tmp - 1] = u;
+                *f = *tmp;
+                f++;
+                tam_fila++;
+            }
+        }
+        cor[u-1] = 2;
+    }
+    
 }
 
 int main(void)
@@ -82,6 +119,7 @@ int main(void)
     int *d = new int[qtd_linhas];
     int *f = new int[qtd_linhas];
     int *cor = new int[qtd_linhas];
+    int *pi = new int[qtd_linhas];
 
     int *tmp = nome;
 
@@ -132,25 +170,34 @@ int main(void)
     } 
 
     // PRINTA A MATRIZ DE ARESTA
-    for (ptr = matriz; ptr < matriz+(qtd_linhas*qtd_linhas); ptr++, i++){
-        if (i == qtd_linhas - 1) {
-        //    cout << endl;
+    for (ptr = matriz, i = 0; ptr < matriz+(qtd_linhas*qtd_linhas); ptr++, i++){
+        if (i == qtd_linhas) {
+            cout << endl;
             i = 0;
         }
         cout << *ptr << " ";
     } 
+    cout << endl << endl;
     for (int i = 0; i < qtd_linhas; i++) {
         cout << "ADJ de " << i+1 << endl;
-        for (int *a = adj(matriz, qtd_linhas, i), j = 0; j < qtd_linhas; j++, a++) {
+        for (int *a = adj(matriz, qtd_linhas, i), j = 0; j < qtd_linhas-1; j++, a++) {
             cout << *a << " ";
         }
         cout << endl;
-    }
+    } 
+    cout << "BUSCA POR DFS: " << endl;
     dfs(nome, cor, d, f, qtd_linhas, matriz);
     for (int *i = nome, *j = d, *k = f, *l = cor; i < nome + qtd_linhas; i++, j++, k++, l++) {
         cout << "V: " << *i << " d: " << *j << " f: " << *k << " cor: " << *l << endl;
     }
+    cout << endl << endl;
+    
+    cout << "BUSCA POR BFS: " << endl;
+    bfs(nome, 1, cor, d, pi, qtd_linhas, matriz);
+    for (int *i = nome, *j = d, *k = pi, *l = cor; i < nome + qtd_linhas; i++, j++, k++, l++) {
+        cout << "V: " << *i << " d: " << *j << " pi: " << *k << " cor: " << *l << endl;
+    }
     cout << endl;
-
+    
     return 0;
 }
