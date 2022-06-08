@@ -36,11 +36,13 @@ list<conjunto> formaConjunto(int *matriz, int tamanho)
 list<conjunto> sortConjunto(list<conjunto> grafo, int tamanho)
 {
     list<conjunto> retorno;
+
     list<conjunto> :: iterator p1;
     conjunto o1;
 
     list<conjunto> :: iterator p2;
     conjunto o2;
+
 
     conjunto menorValor;
     menorValor.pesoAresta = 9999;
@@ -65,6 +67,7 @@ list<int> AGM_Kruskal(list<conjunto> grafo, int tamanho)
 {
     list<int> X[tamanho];
     list<conjunto> AI;
+    
 }
 
 int main(void)
@@ -147,8 +150,15 @@ int main(void)
         cout << "( " <<tmp.vA << " , " << tmp.vB << " )  =  " << tmp.pesoAresta << endl; 
     }
     cout << endl;
-
-    cout << tamanhoConjunto << endl;
+    
+    list<conjunto> sortAresta = sortConjunto(verticesArestas, tamanhoConjunto);
+    for (p2 = sortAresta.begin(); p2 != sortAresta.end(); p2++)
+    {
+        conjunto tmp = *p2;
+        cout << tmp.pesoAresta << " ";
+    }
+    cout << endl;
+    
 
     return 0;
 }
